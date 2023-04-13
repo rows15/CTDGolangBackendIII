@@ -1,4 +1,4 @@
-# Oficina de código: Desafio Go II
+# Go Backend Api Checkpoint
 
 ### Objetivo:
 A seguir, apresenta-se um desafio integrador que nos permitirá avaliar todos os tópicos abordados no curso.
