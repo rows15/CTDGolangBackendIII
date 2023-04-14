@@ -19,7 +19,7 @@ Pretende-se implementar uma API que permita administrar a marcação de consulta
  ## Reqierimentos:
 
 ### Administração de dados de pacientes:
-  Listar, adicionar, alterar ou excluir pacientes. Registrar seu **sobrenome, RG, nome e matrícula**. Solicita-se o desenvolvimento de um **CRUD** para a entidade **Paciente**.
+  Listar, adicionar, alterar ou excluir pacientes. Registrar seu **matrícula, nome, sobrenome e RG**. Solicita-se o desenvolvimento de um **CRUD** para a entidade **Paciente**.
   #### Métodos
   Requisições para a API devem seguir os padrões:
 
