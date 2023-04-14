@@ -1,10 +1,270 @@
 # Go Backend Api Checkpoint
 
 ### Objetivo:
-A seguir, apresenta-se um desafio integrador que nos permitirá avaliar todos os tópicos abordados no curso.
+A seguir apresenta-se um desafio integrador que nos permitirá avaliar os tópicos abordados no curso.
 
+
+## Requerimentos técnicos do desafio
+A aplicação deve ser desenvolvida em design orientado a pacotes:
+* **Camada/domínio** de entidades de negócio
+* **Camada/domínio** de acesso a dados (Repository)
+* **Camada de acesso a dados (banco de dados)**: é o banco de dados do nosso sistema. Você poderá usar qualquer um dos bancos de dados relacionais modelado através de um modelo
+entidade-relação, como H2 ou MySQL, ou não relacional, como o Mongo DB.
+* **Camada/domínio** service
+* **Camada/domínio** handler                                            |
+ 
 ## Sistema de marcação de consultas
-Pretende-se implementar uma API que permita administrar a marcação de consultas para uma clínica odontológica, que deve atender aos requerimentos a seguir:
+Pretende-se implementar uma API que permita administrar a marcação de consultas para uma clínica odontológica.
+
+ ## Reqierimentos:
+
+### Administração de dados de pacientes:
+  Listar, adicionar, alterar ou excluir pacientes. Registrar seu **sobrenome, RG, nome e matrícula**. Solicita-se o desenvolvimento de um **CRUD** para a entidade **Paciente**.
+  #### Métodos
+  Requisições para a API devem seguir os padrões:
+
+  | Método   | Descrição                                               |
+  |----------------------------------------------------------|---------|
+  | `POST`   | Adicionar paciente.                                     |
+  | `GET`    | Trazer paciente pelo seu ID.                            |
+  | `PUT`    | Atualizar paciente.                                     |
+  | `PATCH`  | Atualizar um paciente através de algum dos seus campos. |
+  | `DELETE` | Excluir paciente.                                       |
+ ### Request / Responses
+  ### Adicionar paciente [POST /api/v1/patients]
+  + Request (application/json)
+    + Header
+
+            {"SECRET_TOKEN": "TOKEN"}
+    + Body
+    
+            {
+              "surname": "Rocha",
+              "name": "Julia",
+              "identity_number": "00000001",
+              "created_at": "07/12/2022 23:00",    
+            }
+  + Response 201 (application/json)
+    + Body
+
+           {
+              "id": 1,
+              "surname": "Rocha",
+              "name": "Julia",
+              "identity_number": "00000001",
+              "created_at": "07/12/2022 23:00",  
+           }
+  + Response 400 (application/json)
+    + Body
+
+           {
+               "code": 400,
+               "status": "error",
+               "message": "invalid data provided",
+               "time_stamp": "2022-12-07 14:55:13.645419 -0300 -03 m=+3.702563901"
+           }
+  + Response 401 (application/json)
+    + Body
+
+           {
+               "code": 400,
+               "status": "error",
+               "message": "invalid data provided",
+               "time_stamp": "2022-12-07 14:55:13.645419 -0300 -03 m=+3.702563901""
+           }
+  ### Buscar paciente [GET /api/v1/patients/{id}]
+  + Request (application/json)
+    + Header
+
+            {"SECRET_TOKEN": "TOKEN"}
+  + Response 200 (application/json)
+    + Body
+
+           {
+                 "data": {
+                     "id": 1,
+                     "surname": "Queiroz",
+                     "name": "Julia",
+                     "identity_number": "00000001",
+                     "created_at": "07/12/2022 11:00"
+                 }
+            }
+  + Response 400 (application/json)
+    + Body
+
+          {
+                "code": 400,
+                "status": "error",
+                "message": "invalid id provided",
+                "time_stamp": "2022-12-07 14:55:13"
+          }
+  + Response 401 (application/json)
+    + Body
+
+          {
+              "code": 400,
+              "status": "error",
+              "message": "Token not found",
+              "time_stamp": "2022-12-07 14:55:13.645419 -0300 -03 m=+3.702563901""
+          }
+  + Response 404 (application/json)
+    + Body
+
+          {
+               "code": 404,
+               "status": "error",
+               "message": "patient not found",
+               "time_stamp": "2022-12-07 14:55:13"
+          }
+  ### Atualizar paciente [PUT /api/v1/patients/{id}]
+  + Request (application/json)
+    + Header
+
+            {"SECRET_TOKEN": "TOKEN"}
+    + Body
+
+             {
+               "surname": "Queiroz",
+               "name": "Julia",
+               "identity_number": "00000001",
+               "created_at": "07/12/2022 11:00"  
+            }
+  + Response 200 (application/json)
+    + Body
+
+            {
+                 "data": {
+                     "id": 1,
+                     "surname": "Queiroz",
+                     "name": "Julia",
+                     "identity_number": "00000001",
+                     "created_at": "07/12/2022 11:00"
+                 }
+            }
+  + Response 400 (application/json)
+    + Body
+
+            {
+                "code": 400,
+                "status": "error",
+                "message": "invalid id provided",
+                "time_stamp": "2022-12-07 14:55:13"
+            }
+  + Response 400 (application/json)
+    + Body
+
+            {
+                "code": 400,
+                "status": "error",
+                "message": "invalid data provided",
+                "time_stamp": "2022-12-07 14:55:13"
+            }
+    + Response 401 (application/json)
+    + Body
+
+            {
+                "code": 401,
+                "status": "error",
+                "message": "Token not found",
+                "time_stamp": "2022-12-07 14:55:13"
+            }
+  + Response 404 (application/json)
+    + Body
+
+            {
+                "code": 404,
+                "status": "error",
+                "message": "patient not found",
+                "time_stamp": "2022-12-07 14:55:13"
+            }
+  ### Atualizar paciente [PATCH /api/v1/patients/{id}]
+  + Request (application/json)
+    + Header
+       
+            {"SECRET_TOKEN":"TOKEN"}
+    + Body
+
+             {
+               "identity_number": "04333330",
+             }
+  + Response 200 (application/json)
+    + Body
+
+             {
+                 "data": {
+                     "id": 1,
+                     "surname": "Queiroz",
+                     "name": "Julia",
+                     "identity_number": "04333330",
+                     "created_at": "07/12/2022 11:00"
+                 }
+             }
+  + Response 400 (application/json)
+    + Body
+
+               {
+                   "code": 400,
+                   "status": "error",
+                   "message": "invalid id provided",
+                   "time_stamp": "2022-12-07 14:55:13.645419 -0300 -03 m=+3.702563901"
+               }
+    + Response 400 (application/json)
+    + Body
+
+               {
+                   "code": 400,
+                   "status": "error",
+                   "message": "invalid data provided",
+                   "time_stamp": "2022-12-07 14:55:13.645419 -0300 -03 m=+3.702563901"
+               }
+  + Response 401 (application/json)
+     + Body
+
+               {
+                   "code": 401,
+                   "status": "error",
+                   "message": "Token not found",
+                   "time_stamp": "2022-12-07 14:55:13.645419 -0300 -03 m=+3.702563901"
+               }
+  + Response 404 (application/json)
+    + Body
+
+               {
+                   "code": 404,
+                   "status": "error",
+                   "message": "patient not found",
+                   "time_stamp": "2022-12-07 14:55:13.645419 -0300 -03 m=+3.702563901"
+               }
+  ### Excluir paciente [DELETE /api/v1/patients/{id}]
+  + Request (application/json)
+    + Header
+
+             {"SECRET_TOKEN":"TOKEN"}
+  + Response 200 (application/json)
+    + Body
+
+               {
+                   "success": "patient deleted"
+               }
+  + Response 400 (application/json)
+    + Body
+
+               {
+                   "code": 400,
+                   "status": "error",
+                   "message": "invalid id provided",
+                   "time_stamp": "2022-12-07 14:55:13"
+               }
+  + Response 404 (application/json)
+    + Body
+
+               {
+                   "code": 404,
+                   "status": "error",
+                   "message": "unable to delete, patient not found",
+                   "time_stamp": "2022-12-07 14:55:13"
+               }
+
 
 ### Administração de dados de dentistas:
   Listar, adicionar, alterar ou excluir dentitas. Registrar seus **sobrenome, nome e matrícula**. Solicita-se o desenvolvimento de um **CRUD** para a entidade **Dentista**.
@@ -17,8 +277,10 @@ Pretende-se implementar uma API que permita administrar a marcação de consulta
   | `GET`    | Trazer dentista pelo seu ID.                                 |
   | `PUT`    | Atualizar dentista.                                          |
   | `PATCH`  | Atualizar um dentista através de algum dos seus campos.      |
-  | `DELETE` | Excluir dentista.                                            |
- ### Request / Responses
+  | `DELETE` | Excluir dentista.
+
+
+### Request / Responses
  ### Adicionar dentista [POST /api/v1/dentists]
   + Request (application/json)
       + Header
@@ -292,253 +554,6 @@ Pretende-se implementar uma API que permita administrar a marcação de consulta
                   "message": "unable to delete, dentist not found",
                   "time_stamp": "2022-12-07 14:55:13.645419 -0300 -03 m=+3.702563901"
               }
-
-### Administração de dados de pacientes:
-  Listar, adicionar, alterar ou excluir pacientes. Registrar seus **sobrenome, RG, nome e matrícula**. Solicita-se o desenvolvimento de um **CRUD** para a entidade **Paciente**.
-  #### Métodos
-  Requisições para a API devem seguir os padrões:
-
-  | Método   | Descrição                                               |
-  |----------------------------------------------------------|---------|
-  | `POST`   | Adicionar paciente.                                     |
-  | `GET`    | Trazer paciente pelo seu ID.                            |
-  | `PUT`    | Atualizar paciente.                                     |
-  | `PATCH`  | Atualizar um paciente através de algum dos seus campos. |
-  | `DELETE` | Excluir paciente.                                       |
- ### Request / Responses
-  ### Adicionar paciente [POST /api/v1/patients]
-  + Request (application/json)
-    + Header
-
-            {"SECRET_TOKEN": "TOKEN"}
-    + Body
-    
-            {
-              "surname": "Rocha",
-              "name": "Julia",
-              "identity_number": "00000001",
-              "created_at": "07/12/2022 23:00",    
-            }
-  + Response 201 (application/json)
-    + Body
-
-           {
-              "id": 1,
-              "surname": "Rocha",
-              "name": "Julia",
-              "identity_number": "00000001",
-              "created_at": "07/12/2022 23:00",  
-           }
-  + Response 400 (application/json)
-    + Body
-
-           {
-               "code": 400,
-               "status": "error",
-               "message": "invalid data provided",
-               "time_stamp": "2022-12-07 14:55:13.645419 -0300 -03 m=+3.702563901"
-           }
-  + Response 401 (application/json)
-    + Body
-
-           {
-               "code": 400,
-               "status": "error",
-               "message": "invalid data provided",
-               "time_stamp": "2022-12-07 14:55:13.645419 -0300 -03 m=+3.702563901""
-           }
-  ### Buscar paciente [GET /api/v1/patients/{id}]
-  + Request (application/json)
-    + Header
-
-            {"SECRET_TOKEN": "TOKEN"}
-  + Response 200 (application/json)
-    + Body
-
-           {
-                 "data": {
-                     "id": 1,
-                     "surname": "Queiroz",
-                     "name": "Julia",
-                     "identity_number": "00000001",
-                     "created_at": "07/12/2022 11:00"
-                 }
-            }
-  + Response 400 (application/json)
-    + Body
-
-          {
-                "code": 400,
-                "status": "error",
-                "message": "invalid id provided",
-                "time_stamp": "2022-12-07 14:55:13"
-          }
-  + Response 401 (application/json)
-    + Body
-
-          {
-              "code": 400,
-              "status": "error",
-              "message": "Token not found",
-              "time_stamp": "2022-12-07 14:55:13.645419 -0300 -03 m=+3.702563901""
-          }
-  + Response 404 (application/json)
-    + Body
-
-          {
-               "code": 404,
-               "status": "error",
-               "message": "patient not found",
-               "time_stamp": "2022-12-07 14:55:13"
-          }
-  ### Atualizar paciente [PUT /api/v1/patients/{id}]
-  + Request (application/json)
-    + Header
-
-            {"SECRET_TOKEN": "TOKEN"}
-    + Body
-
-             {
-               "surname": "Queiroz",
-               "name": "Julia",
-               "identity_number": "00000001",
-               "created_at": "07/12/2022 11:00"  
-            }
-  + Response 200 (application/json)
-    + Body
-
-            {
-                 "data": {
-                     "id": 1,
-                     "surname": "Queiroz",
-                     "name": "Julia",
-                     "identity_number": "00000001",
-                     "created_at": "07/12/2022 11:00"
-                 }
-            }
-  + Response 400 (application/json)
-    + Body
-
-            {
-                "code": 400,
-                "status": "error",
-                "message": "invalid id provided",
-                "time_stamp": "2022-12-07 14:55:13"
-            }
-  + Response 400 (application/json)
-    + Body
-
-            {
-                "code": 400,
-                "status": "error",
-                "message": "invalid data provided",
-                "time_stamp": "2022-12-07 14:55:13"
-            }
-    + Response 401 (application/json)
-    + Body
-
-            {
-                "code": 401,
-                "status": "error",
-                "message": "Token not found",
-                "time_stamp": "2022-12-07 14:55:13"
-            }
-  + Response 404 (application/json)
-    + Body
-
-            {
-                "code": 404,
-                "status": "error",
-                "message": "patient not found",
-                "time_stamp": "2022-12-07 14:55:13"
-            }
-  ### Atualizar paciente [PATCH /api/v1/patients/{id}]
-  + Request (application/json)
-    + Header
-       
-            {"SECRET_TOKEN":"TOKEN"}
-    + Body
-
-             {
-               "identity_number": "04333330",
-             }
-  + Response 200 (application/json)
-    + Body
-
-             {
-                 "data": {
-                     "id": 1,
-                     "surname": "Queiroz",
-                     "name": "Julia",
-                     "identity_number": "04333330",
-                     "created_at": "07/12/2022 11:00"
-                 }
-             }
-  + Response 400 (application/json)
-    + Body
-
-               {
-                   "code": 400,
-                   "status": "error",
-                   "message": "invalid id provided",
-                   "time_stamp": "2022-12-07 14:55:13.645419 -0300 -03 m=+3.702563901"
-               }
-    + Response 400 (application/json)
-    + Body
-
-               {
-                   "code": 400,
-                   "status": "error",
-                   "message": "invalid data provided",
-                   "time_stamp": "2022-12-07 14:55:13.645419 -0300 -03 m=+3.702563901"
-               }
-  + Response 401 (application/json)
-     + Body
-
-               {
-                   "code": 401,
-                   "status": "error",
-                   "message": "Token not found",
-                   "time_stamp": "2022-12-07 14:55:13.645419 -0300 -03 m=+3.702563901"
-               }
-  + Response 404 (application/json)
-    + Body
-
-               {
-                   "code": 404,
-                   "status": "error",
-                   "message": "patient not found",
-                   "time_stamp": "2022-12-07 14:55:13.645419 -0300 -03 m=+3.702563901"
-               }
-  ### Excluir paciente [DELETE /api/v1/patients/{id}]
-  + Request (application/json)
-    + Header
-
-             {"SECRET_TOKEN":"TOKEN"}
-  + Response 200 (application/json)
-    + Body
-
-               {
-                   "success": "patient deleted"
-               }
-  + Response 400 (application/json)
-    + Body
-
-               {
-                   "code": 400,
-                   "status": "error",
-                   "message": "invalid id provided",
-                   "time_stamp": "2022-12-07 14:55:13"
-               }
-  + Response 404 (application/json)
-    + Body
-
-               {
-                   "code": 404,
-                   "status": "error",
-                   "message": "unable to delete, patient not found",
-                   "time_stamp": "2022-12-07 14:55:13"
-               }
 
 ### Administração de marcação de consultas:
 
@@ -1076,11 +1091,3 @@ Deve ser possível atribuir a um **paciente** uma consulta com um **dentista** e
                "time_stamp": "2022-12-07 14:55:13.645419 -0300 -03 m=+3.702563901"
            }
 
-## Requerimentos técnicos
-A aplicação deve ser desenvolvida em design orientado a pacotes:
-* **Camada/domínio** de entidades de negócio
-* **Camada/domínio** de acesso a dados (Repository)
-* **Camada de acesso a dados (banco de dados)**: é o banco de dados do nosso sistema. Você poderá usar qualquer um dos bancos de dados relacionais modelado através de um modelo
-entidade-relação, como H2 ou MySQL, ou não relacional, como o Mongo DB.
-* **Camada/domínio** service
-* **Camada/domínio** handler
